@@ -86,13 +86,55 @@ def depthFirstSearch(problem: SearchProblem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
+    from game import Directions
+    from util import Stack
+    s = Directions.SOUTH
+    w = Directions.WEST
+    n = Directions.NORTH
+    e = Directions.EAST
+
+    start = problem.getStartState()
+    fringe = Stack()
+    fringe.push( (start, []) )
+    visited = set()
+
+    while fringe:
+        state, path = fringe.pop()
+        if problem.isGoalState(state):
+            return path
+        if state not in visited:
+            visited.add(state)
+            for successor, action, cost in problem.getSuccessors(state):
+                if successor not in visited:
+                    fringe.push((successor, path + [action]))
+    return []
+
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
 
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    from game import Directions
+    from util import Stack
+    from util import Queue
+    s = Directions.SOUTH
+    w = Directions.WEST
+    n = Directions.NORTH
+    e = Directions.EAST
+
+    start = problem.getStartState()
+    fringe = Queue()
+    fringe.push( (start, []) )
+    visited = set()
+
+    while fringe:
+        state, path = fringe.pop()
+        if problem.isGoalState(state):
+            return path
+        if state not in visited:
+            visited.add(state)
+            for successor, action, cost in problem.getSuccessors(state):
+                if successor not in visited:
+                    fringe.push((successor, path + [action]))
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
