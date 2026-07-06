@@ -296,12 +296,8 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         x, y = self.startingPosition
-        cornerset = list(self.corners)
-        state = ((x, y), cornerset)
-        
-        for corner in self.corners:
-            if state[0] == corner:
-                state[1].remove(corner)
+        remainingcorners = tuple(c for c in self.corners if c != (x, y))
+        state = ((x, y), remainingcorners)
         
         return state
 
@@ -310,7 +306,7 @@ class CornersProblem(search.SearchProblem):
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        if state[1] == set():
+        if len(state[1]) == 0:
             return True
         return False
 
@@ -335,11 +331,8 @@ class CornersProblem(search.SearchProblem):
             hitsWall = self.walls[nextx][nexty]
             "*** YOUR CODE HERE ***"
             if not hitsWall:
-                newstate = ( (nextx, nexty), list(state[1]))
-                for corner in self.corners:
-                    if (nextx, nexty) == corner:
-                        newstate[1].remove(corner)
-                
+                remainingcorners = tuple(c for c in state[1] if c != (nextx, nexty))
+                newstate = ((nextx, nexty), remainingcorners)
                 successors.append( (newstate , action, 1) )
 
         self._expanded += 1 # DO NOT CHANGE
