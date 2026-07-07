@@ -377,10 +377,10 @@ def cornersHeuristic(state: Any, problem: CornersProblem):
 
     orderedcorners = sorted(unvisited, key=lambda x : abs(location[0] - x[0]) + abs(location[1] - x[1]))
 
-    total = abs(location[0] - unvisited[0][0]) + abs(location[1] - unvisited[0][1])
+    total = abs(location[0] - orderedcorners[0][0]) + abs(location[1] - orderedcorners[0][1])
 
     for i in range(len(orderedcorners) - 1):
-        total += abs(unvisited[i][0] - unvisited[i+1][0]) + abs(unvisited[i][1] - unvisited[i+1][1])
+        total += abs(orderedcorners[i][0] - orderedcorners[i+1][0]) + abs(orderedcorners[i][1] - orderedcorners[i+1][1])
 
     return total
 
