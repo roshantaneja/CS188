@@ -491,7 +491,15 @@ def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
     """
     position, foodGrid = state
 
-    return foodGrid.count()
+    # return foodGrid.count()
+    
+    foodList = foodGrid.asList()
+    if not foodList:
+        return 0
+    return max(abs(position[0] - fx) + abs(position[1] - fy) for (fx, fy) in foodList)
+
+    
+    return 
 
 
     return 0
