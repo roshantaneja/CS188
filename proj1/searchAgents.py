@@ -533,11 +533,6 @@ class ClosestDotSearchAgent(SearchAgent):
 
         return search.bfs(problem)
 
-        "*** YOUR CODE HERE ***"
-
-
-        util.raiseNotDefined()
-
 class AnyFoodSearchProblem(PositionSearchProblem):
     """
     A search problem for finding a path to any food.
@@ -572,9 +567,6 @@ class AnyFoodSearchProblem(PositionSearchProblem):
         x,y = state
 
         return self.food[x][y]
-
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
 
 def mazeDistance(point1: Tuple[int, int], point2: Tuple[int, int], gameState: pacman.GameState) -> int:
     """
