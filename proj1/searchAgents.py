@@ -374,13 +374,25 @@ def cornersHeuristic(state: Any, problem: CornersProblem):
 
     if not unvisited:
         return 0
+    
+    remaining = list(unvisited)
 
-    orderedcorners = sorted(unvisited, key=lambda x : abs(location[0] - x[0]) + abs(location[1] - x[1]))
+    pos = location
+    total = 0
 
-    total = abs(location[0] - orderedcorners[0][0]) + abs(location[1] - orderedcorners[0][1])
+    while remaining:
+        nxt = min(remaining, key=lambda x : abs(pos[0] - x[0]) + abs(pos[1] - x[1]))
+        total += abs(pos[0] - nxt[0]) + abs(pos[1] - nxt[1])
+        pos = nxt
+        remaining.remove(nxt)
+    return total
 
-    for i in range(len(orderedcorners) - 1):
-        total += abs(orderedcorners[i][0] - orderedcorners[i+1][0]) + abs(orderedcorners[i][1] - orderedcorners[i+1][1])
+    # orderedcorners = sorted(unvisited, key=lambda x : abs(location[0] - x[0]) + abs(location[1] - x[1]))
+
+    # total = abs(location[0] - orderedcorners[0][0]) + abs(location[1] - orderedcorners[0][1])
+
+    # for i in range(len(orderedcorners) - 1):
+    #     total += abs(orderedcorners[i][0] - orderedcorners[i+1][0]) + abs(orderedcorners[i][1] - orderedcorners[i+1][1])
 
     return total
 
