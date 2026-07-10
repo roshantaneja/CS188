@@ -350,7 +350,7 @@ def betterEvaluationFunction(currentGameState: GameState):
     Your extreme ghost-hunting, pellet-nabbing, food-gobbling, unstoppable
     evaluation function (question 5).
 
-    DESCRIPTION: <write something here so we know what you did>
+    DESCRIPTION: i starrted with manhattan distance to food and inverse of the same for the ghost then i really wanted to prioritize killing the ghost so i added a section where if the time to catch the ghost is shorter than the distance then priorize killing it asap. After that i still wasnt happy with my 1100 average, so i wanted to implement bfs mazedistance like we did in project 1 and it actually worked pretty well, after that i tuned the values a bit and this is what is submitted now!
     """
     "*** YOUR CODE HERE ***"
 
