@@ -162,9 +162,6 @@ class MinimaxAgent(MultiAgentSearchAgent):
         """
         "*** YOUR CODE HERE ***"
 
-        actions = gameState.getLegalActions()
-        numagents = gameState.getNumAgents()
-
         def value(state, agentIndex, depth):
             if depth == 0:
                 return self.evaluationFunction(state)
