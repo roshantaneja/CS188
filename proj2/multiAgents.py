@@ -179,7 +179,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
             else:
                 nextDepth = depth
 
-            actions = state.getLegalActions()
+            actions = state.getLegalActions(agentIndex)
             outcomes = []
             for a in actions:
                 successor = state.generateSuccessor(agentIndex, a)
