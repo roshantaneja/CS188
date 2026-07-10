@@ -90,11 +90,15 @@ class ReflexAgent(Agent):
 
         for i in range(len(newGhostStates)):
             ghoststate = newGhostStates[i]
+            scaredtime = newScaredTimes[i]
             ghostdist = manhattanDistance(newPos, ghoststate.getPosition())
-            
-            if ghostdist <= 1:
-                return float('-inf')
-            score = score - 1.0/ghostdist
+
+            if scaredtime > 0:
+                score = score + 1.0/(ghostdist + 1)
+            else:
+                if ghostdist <= 1:
+                    return float('-inf')
+                score = score - 1.0/ghostdist
 
         return score
 
