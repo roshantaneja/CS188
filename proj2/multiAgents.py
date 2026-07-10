@@ -358,21 +358,46 @@ def betterEvaluationFunction(currentGameState: GameState):
     food = currentGameState.getFood()
     ghoststates = currentGameState.getGhostStates()
     capsules = currentGameState.getCapsules()
+    walls = currentGameState.getWalls()
 
     score = currentGameState.getScore()
     foodlist = food.asList()
 
-    if len(foodlist) > 0:
-        closest = manhattanDistance(pos, foodlist[0])
-        for f in foodlist:
-            d = manhattanDistance(pos, f)
-            if d < closest:
-                closest = d
-        score = score + 1.0/closest
+    # if len(foodlist) > 0:
+    #     closest = manhattanDistance(pos, foodlist[0])
+    #     for f in foodlist:
+    #         d = manhattanDistance(pos, f)
+    #         if d < closest:
+    #             closest = d
+    #     score = score + 1.0/closest
+
+    foodset = {}
+    for f in foodlist:
+        foodset[f] = True
+    
+    queue = [(pos, 0)]
+    visited = {}
+    visited[pos] = True
+    nearest = None
+    while len(queue) > 0:
+        current, dist = queue[0]
+        queue = queue[1:]
+        if current in foodset:
+            nearest = dist
+            break
+        x, y = current
+        neighbors = [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
+        for dx, dy in neighbors:
+            if not walls[dx][dy]:
+                if (dx, dy) not in visited:
+                    visited[(dx, dy)] = True
+                    queue.append(((dx, dy), dist + 1))
+    if nearest is not None:
+        score = score + 1.0 / (nearest + 1)
+
 
 
     score = score - 4 * len(foodlist)
-
     score = score - 20 * len(capsules)
 
     for ghost in ghoststates:
