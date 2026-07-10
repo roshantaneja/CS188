@@ -264,7 +264,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             outcomes = []
             for a in actions:
                 successor = state.generateSuccessor(agentIndex, a)
-                v = max(v, value(successor, agent, nextDepth, alpha, beta))
+                v = min(v, value(successor, agent, nextDepth, alpha, beta))
                 if v < alpha:
                     return v
                 beta = min(beta, v)
@@ -277,14 +277,14 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                 return minvalue(state, agentIndex, depth, alpha, beta)
 
         bestAction = None
-        bestValue = float('-inf')
+        v = float('-inf')
         alpha = float('-inf')
         beta = float('inf')
         for action in gameState.getLegalActions(0):
             successor = gameState.generateSuccessor(0, action)
-            v = value(successor, 1, self.depth, alpha, beta)
-            if v > bestValue:
-                bestValue = v
+            score = value(successor, 1, self.depth, alpha, beta)
+            if score > v:
+                v = score
                 bestAction = action
             alpha = max(alpha, v)
         
