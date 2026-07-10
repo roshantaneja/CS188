@@ -194,6 +194,17 @@ class MinimaxAgent(MultiAgentSearchAgent):
             else:
                 return min(outcomes)
 
+        bestAction = None
+        bestValue = float('-inf')
+        for action in gameState.getLegalActions(0):
+            successor = gameState.generateSuccessor(0, action)
+            v = value(successor, 1, self.depth)
+            if v > bestValue:
+                bestValue = v
+                bestAction = action
+        
+        return bestAction
+
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
     Your minimax agent with alpha-beta pruning (question 3)
