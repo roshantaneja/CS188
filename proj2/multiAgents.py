@@ -397,14 +397,14 @@ def betterEvaluationFunction(currentGameState: GameState):
 
 
 
-    score = score - 4 * len(foodlist)
+    score = score - 10 * len(foodlist)
     score = score - 20 * len(capsules)
 
     for ghost in ghoststates:
         ghostdist = manhattanDistance(pos, ghost.getPosition())
         if ghost.scaredTimer > 0:
             if ghost.scaredTimer > ghostdist:
-                score = score + 10.0/(ghostdist + 1)
+                score = score + 8.0/(ghostdist + 1)
             else:
                 score = score + 1.0/(ghostdist + 1)
         else:
