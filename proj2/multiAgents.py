@@ -171,7 +171,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
                 return self.evaluationFunction(state)
             
 
-            numagents = gameState.getNumAgents()
+            numagents = state.getNumAgents()
             agent = (agentIndex + 1) % numagents
 
             if agent == 0:
@@ -179,7 +179,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
             else:
                 nextDepth = depth
 
-            actions = gameState.getLegalActions()
+            actions = state.getLegalActions()
             outcomes = []
             for a in actions:
                 successor = state.generateSuccessor(agentIndex, a)
