@@ -88,7 +88,13 @@ class ReflexAgent(Agent):
             score = score + 1.0 / closestFood
 
 
-        
+        for i in range(len(newGhostStates)):
+            ghoststate = newGhostStates[i]
+            ghostdist = manhattanDistance(newPos, ghoststate.getPosition())
+            
+            if ghostdist <= 1:
+                return float('-inf')
+            score = score - 1.0/ghostdist
 
         return score
 
