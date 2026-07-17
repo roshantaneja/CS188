@@ -76,7 +76,7 @@ class ValueIterationAgent(ValueEstimationAgent):
                 if best is not None:
                     new[s] = best
 
-        self.values = new
+            self.values = new
 
 
 
@@ -93,7 +93,7 @@ class ValueIterationAgent(ValueEstimationAgent):
           value function stored in self.values.
         """
         total = 0
-        for n, p in self.mdp.getTransitionStatesAndProbs(state, action)
+        for n, p in self.mdp.getTransitionStatesAndProbs(state, action):
             reward = self.mdp.getReward(state, action, n)
             total += p*(reward + self.discount*self.values[n])
         return total
@@ -107,8 +107,17 @@ class ValueIterationAgent(ValueEstimationAgent):
           there are no legal actions, which is the case at the
           terminal state, you should return None.
         """
-        for 
-        util.raiseNotDefined()
+        if self.mdp.isTerminal(state):
+            return None
+        best_a = None
+        best_q = None
+        for a in self.mdp.getPossibleActions(state):
+            q = self.computeQValueFromValues(state, a)
+            if best_q is None or q> best_q:
+                best_q = q
+                best_a = a
+        return best_a
+        
 
     def getPolicy(self, state):
         return self.computeActionFromValues(state)
