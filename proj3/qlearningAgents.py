@@ -65,7 +65,7 @@ class QLearningAgent(ReinforcementAgent):
         "*** YOUR CODE HERE ***"
         actions = self.getLegalActions(state)
         if len(actions) == 0:
-            return 0.0
+            return 0
         best = None
         for a in actions:
             q = self.getQValue(state, a)
