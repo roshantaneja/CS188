@@ -82,7 +82,7 @@ class QLearningAgent(ReinforcementAgent):
         "*** YOUR CODE HERE ***"
         actions = self.getLegalActions(state)
         if len(actions) == 0:
-            return 0
+            return None
         best = self.computeValueFromQValues(state)
         best_actions = []
         for a in actions:
