@@ -64,15 +64,14 @@ class QLearningAgent(ReinforcementAgent):
         """
         "*** YOUR CODE HERE ***"
         actions = self.getLegalActions(state)
-        if not actions:
-            return 0
-        else:
-            best = 0
-            for a in actions:
-                q = self.getQValue(state, a)
-                if best is None or q > best:
-                    best = q
-            return best
+        if len(actions) == 0:
+            return 0.0
+        best = None
+        for a in actions:
+            q = self.getQValue(state, a)
+            if best is None or q > best:
+                best = q
+        return best
 
     def computeActionFromQValues(self, state):
         """
@@ -82,7 +81,7 @@ class QLearningAgent(ReinforcementAgent):
         """
         "*** YOUR CODE HERE ***"
         actions = self.getLegalActions(state)
-        if not actions:
+        if len(actions) == 0:
             return 0
         best = self.computeValueFromQValues(state)
         best_actions = []
@@ -90,7 +89,6 @@ class QLearningAgent(ReinforcementAgent):
             if self.getQValue(state, a) == best:
                 best_actions.append(a)
         return random.choice(best_actions)
-        util.raiseNotDefined()
 
     def getAction(self, state):
         """
@@ -123,8 +121,7 @@ class QLearningAgent(ReinforcementAgent):
         "*** YOUR CODE HERE ***"
         sample = reward + self.discount * self.computeValueFromQValues(nextState)
         old = self.getQValue(state, action)
-        self.qvalues[(state, action)] = old + self.alpha*sample + (1-self.alpha)*old
-        util.raiseNotDefined()
+        self.qvalues[(state, action)] = old + self.alpha*(sample - old)
 
     def getPolicy(self, state):
         return self.computeActionFromQValues(state)
