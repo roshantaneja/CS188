@@ -84,7 +84,7 @@ class QLearningAgent(ReinforcementAgent):
         actions = self.getLegalActions(state)
         if not actions:
             return 0
-        best = self.computeActionFromQValues(state)
+        best = self.computeValueFromQValues(state)
         best_actions = []
         for a in actions:
             if self.getQValue(state, a) == best:
