@@ -65,7 +65,7 @@ class QLearningAgent(ReinforcementAgent):
         "*** YOUR CODE HERE ***"
         actions = self.getLegalActions(state)
         if len(actions) == 0:
-            return 0
+            return 0.0
         best = None
         for a in actions:
             q = self.getQValue(state, a)
@@ -204,9 +204,9 @@ class ApproximateQAgent(PacmanQAgent):
         """
         "*** YOUR CODE HERE ***"
         features = self.featExtractor.getFeatures(state, action)
-        difference = reward + (self.discount * self.computeValueFromQValues(nextState)) - self.getQValue(state, action)
+        difference = (reward + self.discount * self.computeValueFromQValues(nextState)) - self.getQValue(state, action)
         for f in features:
-            self.weights[f] = self.weights[f] * self.alpha * difference * features[f] 
+            self.weights[f] = self.weights[f] + self.alpha * difference * features[f] 
 
     def final(self, state):
         "Called at the end of each game."
