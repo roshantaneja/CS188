@@ -106,7 +106,7 @@ class QLearningAgent(ReinforcementAgent):
         action = None
         "*** YOUR CODE HERE ***"
         actions = self.getLegalActions(state)
-        if len(legal) == 0:
+        if len(actions) == 0:
             return None
         if util.flipCoin(self.epsilon):
             return random.choice(actions)
