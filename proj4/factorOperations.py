@@ -103,6 +103,9 @@ def joinFactors(factors: List[Factor]):
 
     "*** YOUR CODE HERE ***"
 
+    factors = list(factors)
+    domains = factors[0].variableDomainsDict()
+
     unconditioned = set()
     conditioned = set()
     for f in factors:
