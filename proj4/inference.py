@@ -679,7 +679,19 @@ class ParticleFilter(InferenceModule):
         the DiscreteDistribution may be useful.
         """
         "*** YOUR CODE HERE ***"
-        raiseNotDefined()
+        pacmanPosition = gameState.getPacmanPosition()
+        jailPosition = self.getJailPosition()
+
+        weights = DiscreteDistribution()
+        for particle in self.particles:
+            weights[particle] += self.getObservationProb(
+                observation, pacmanPosition, particle, jailPosition)
+
+        if weights.total() == 0:
+            self.initializeUniformly(gameState)
+        else:
+            weights.normalize()
+            self.particles = [weights.sample() for _ in range(self.numParticles)]
         "*** END YOUR CODE HERE ***"
     
     ########### ########### ###########
@@ -692,5 +704,11 @@ class ParticleFilter(InferenceModule):
         gameState.
         """
         "*** YOUR CODE HERE ***"
-        raiseNotDefined()
+        cache = {}
+        newParticles = []
+        for particle in self.particles:
+            if particle not in cache:
+                cache[particle] = self.getPositionDistribution(gameState, particle)
+            newParticles.append(cache[particle].sample())
+        self.particles = newParticles
         "*** END YOUR CODE HERE ***"
