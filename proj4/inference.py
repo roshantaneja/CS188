@@ -585,8 +585,7 @@ class ExactInference(InferenceModule):
 
         self.beliefs.normalize()
         "*** END YOUR CODE HERE ***"
-        self.beliefs.normalize()
-    
+
     ########### ########### ###########
     ########### QUESTION 7  ###########
     ########### ########### ###########
@@ -662,7 +661,7 @@ class ParticleFilter(InferenceModule):
         dist.normalize()
         return dist
         "*** END YOUR CODE HERE ***"
-    
+
     ########### ########### ###########
     ########### QUESTION 10 ###########
     ########### ########### ###########
