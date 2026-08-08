@@ -26,6 +26,7 @@ class PerceptronModel(object):
             x: a node with shape (1 x dimensions)
         Returns: a node containing a single number (the score)
         """
+        return nn.DotProduct(self.w, x)
         "*** YOUR CODE HERE ***"
 
     def get_prediction(self, x):
