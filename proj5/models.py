@@ -79,10 +79,8 @@ class RegressionModel(object):
         Returns:
             A node with shape (batch_size x 1) containing predicted y-values
         """
-        z1 = nn.AddBias(nn.Linear(x, self.W1), self.b1)
-        h1 = nn.ReLU(z1)
-
-        output = nn.AddBias(nn.Linear(h1, self.W2), self.b2)
+        hidden = nn.ReLU(nn.AddBias(nn.Linear(x, self.W1), self.b1))
+        output = nn.AddBias(nn.Linear(hidden, self.W2), self.b2)
         return output
 
     def get_loss(self, x, y):
@@ -110,6 +108,7 @@ class RegressionModel(object):
                 for i in range(len(params)):
                     params[i].update(grads[i], -self.lr)
                 loss_value = nn.as_scalar(loss)
+        # print(f"final loss: {loss_value}")
 
 
 class DigitClassificationModel(object):
@@ -128,7 +127,7 @@ class DigitClassificationModel(object):
     """
     def __init__(self):
         
-        self.lr = 0.5
+        self.lr = 0.4
         self.batch_size = 100
 
         self.W1 = nn.Parameter(784, 200)
@@ -242,18 +241,13 @@ class LanguageIDModel(object):
             A node with shape (batch_size x 5) containing predicted scores
                 (also called logits)
         """
-        h = None
-        for i in range(len(xs)):
-            if i == 0:
-                z = nn.Linear(xs[i], self.Wx)
-            else:
-                z = nn.Add(
-                    nn.Linear(xs[i], self.Wx),
-                    nn.Linear(h, self.W_hidden)
-                )
-            z = nn.AddBias(z, self.b_hidden)
-            h = nn.ReLU(z)
-        
+        h = nn.ReLU(nn.AddBias(nn.Linear(xs[0], self.Wx), self.b_hidden))
+
+        for i in range(1, len(xs)):
+            recurrent = nn.Linear(h, self.W_hidden)
+            input_feat = nn.Linear(xs[i], self.Wx)
+            h = nn.ReLU(nn.AddBias(nn.Add(input_feat, recurrent), self.b_hidden))
+
         logits = nn.AddBias(nn.Linear(h, self.W_out), self.b_out)
         return logits
 
